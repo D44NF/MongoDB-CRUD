@@ -9,16 +9,10 @@ client = AsyncMongoClient(os.getenv("MONGO_CONNECTION"))
 database = client["arcade_launcher"]
 collection = database["games"]
 
-async def add_game(game_id: str, name: str, category: str, price: float, stock: int):
-    game = {
-        "id": game_id,
-        "name": name,
-        "category": category,
-        "price": price,
-        "stock": stock,
-    }
+async def add_game(game: dict):
     result = await collection.insert_one(game)
-    return result.inserted_id
+    return str(result.inserted_id)
+
 
 async def get_game(game_id: str):
     return await collection.find_one({"id": game_id})
