@@ -16,14 +16,19 @@ export default function TopBar() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar
         position="static"
-        sx={{ backgroundColor: "var(--color-primary)" }}
+        elevation={0}
+        sx={{
+          backgroundColor: "background.paper",
+          borderBottom: "1px solid",
+          borderColor: "divider",
+        }}
       >
         <Toolbar>
           <IconButton
             size="large"
             edge="start"
             aria-label="menu"
-            sx={{ mr: 2, color: "var(--color-secondary)" }}
+            sx={{ mr: 2 }}
             onClick={() => setOpen(true)}
           >
             <MenuIcon />
@@ -31,14 +36,14 @@ export default function TopBar() {
           <Typography
             variant="h6"
             component="div"
-            sx={{ flexGrow: 1, color: "var(--color-secondary)" }}
+            sx={{ flexGrow: 1, fontWeight: 700, color: "primary.main", letterSpacing: 0.5 }}
           >
             ArcadeX
           </Typography>
-          <IconButton sx={{ color: "var(--color-secondary)" }}>
+          <IconButton>
             <NotificationsIcon />
           </IconButton>
-          <IconButton sx={{ color: "var(--color-secondary)" }}>
+          <IconButton>
             <AccountCircle />
           </IconButton>
         </Toolbar>
