@@ -13,6 +13,7 @@ class Game(BaseModel):
     category: str
     price: float
     stock: int
+    owned: bool = False
 
 
 class PriceUpdate(BaseModel):
@@ -53,6 +54,16 @@ async def read_game(game_id: str):
 async def create_game(game: Game):
     await db.add_game(game.model_dump())
     return game
+
+
+@app.post("/buy_games/{game_id}")
+async def buy_game(game_id: str):
+    result = await db.buy_game(game_id)
+    if result == "not_found":
+        raise HTTPException(status_code=404, detail="Spiel nicht gefunden")
+    if result == "out_of_stock":
+        raise HTTPException(status_code=409, detail="Spiel ist ausverkauft")
+    return {"ok": True}
 
 
 @app.patch("/change_games/{game_id}/price")

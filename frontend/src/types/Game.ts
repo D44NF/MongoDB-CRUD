@@ -4,4 +4,5 @@ export interface Game {
   category: string;
   price: number;
   stock: number;
+  owned: boolean;
 }

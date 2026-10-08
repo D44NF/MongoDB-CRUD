@@ -50,6 +50,7 @@ export default function Settings() {
       category: form.category.trim(),
       price,
       stock,
+      owned: false,
     };
 
     setSubmitting(true);

@@ -12,6 +12,8 @@ export default function Library() {
     return <AsyncState loading={loading} error={error} />;
   }
 
+  const ownedGames = games.filter((game) => game.owned);
+
   return (
     <Container maxWidth="xl" sx={{ py: 4 }}>
       <Box sx={{ mb: 4 }}>
@@ -23,15 +25,20 @@ export default function Library() {
         </Typography>
       </Box>
 
-      {games.length === 0 ? (
+      {ownedGames.length === 0 ? (
         <Typography color="text.secondary">
           Deine Bibliothek ist noch leer.
         </Typography>
       ) : (
         <Grid container spacing={3}>
-          {games.map((game) => (
+          {ownedGames.map((game) => (
             <Grid key={game.id} size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
-              <GameCard game={game} actionLabel="Spielen" showPrice={false} />
+              <GameCard
+                game={game}
+                actionLabel="Spielen"
+                showPrice={false}
+                disabled={false}
+              />
             </Grid>
           ))}
         </Grid>
