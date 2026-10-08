@@ -14,6 +14,15 @@ class Game(BaseModel):
     price: float
     stock: int
     owned: bool = False
+    imageUrl: str | None = None
+
+
+class GameUpdate(BaseModel):
+    name: str
+    category: str
+    price: float
+    stock: int
+    imageUrl: str | None = None
 
 
 class PriceUpdate(BaseModel):
@@ -54,6 +63,13 @@ async def read_game(game_id: str):
 async def create_game(game: Game):
     await db.add_game(game.model_dump())
     return game
+
+
+@app.put("/update_games/{game_id}")
+async def update_game(game_id: str, body: GameUpdate):
+    if await db.update_game(game_id, body.model_dump()) == 0:
+        raise HTTPException(status_code=404, detail="Spiel nicht gefunden")
+    return {"ok": True}
 
 
 @app.post("/buy_games/{game_id}")

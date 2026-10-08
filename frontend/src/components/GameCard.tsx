@@ -50,9 +50,14 @@ export default function GameCard({
           alignItems: "center",
           justifyContent: "center",
           bgcolor: "action.hover",
+          backgroundImage: game.imageUrl ? `url(${game.imageUrl})` : "none",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
         }}
       >
-        <SportsEsportsIcon sx={{ fontSize: 64, color: "text.disabled" }} />
+        {!game.imageUrl && (
+          <SportsEsportsIcon sx={{ fontSize: 64, color: "text.disabled" }} />
+        )}
       </Box>
       <CardContent sx={{ flexGrow: 1 }}>
         <Typography variant="subtitle1" noWrap sx={{ fontWeight: 700 }}>

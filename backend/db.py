@@ -42,6 +42,13 @@ async def buy_game(game_id: str):
     )
     return "ok"
 
+async def update_game(game_id: str, fields: dict):
+    result = await collection.update_one(
+        {"id": game_id},
+        {"$set": fields},
+    )
+    return result.matched_count
+
 async def update_price(game_id: str, price: float):
     result = await collection.update_one(
         {"id": game_id},
