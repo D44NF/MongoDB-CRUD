@@ -3,9 +3,15 @@ import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import GameCard from "../components/GameCard";
-import { games } from "../data/games";
+import AsyncState from "../components/AsyncState";
+import { useGames } from "../hooks/useGames";
 
 export default function Library() {
+  const { games, loading, error } = useGames();
+  if (loading || error) {
+    return <AsyncState loading={loading} error={error} />;
+  }
+
   return (
     <Container maxWidth="xl" sx={{ py: 4 }}>
       <Box sx={{ mb: 4 }}>

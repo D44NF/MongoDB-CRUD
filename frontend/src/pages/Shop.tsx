@@ -12,20 +12,22 @@ import MenuItem from "@mui/material/MenuItem";
 import Grid from "@mui/material/Grid";
 import SearchIcon from "@mui/icons-material/Search";
 import GameCard from "../components/GameCard";
-import { games } from "../data/games";
+import AsyncState from "../components/AsyncState";
+import { useGames } from "../hooks/useGames";
 
 type SortOption = "relevanz" | "preis-asc" | "preis-desc" | "lager-desc";
 
 const CATEGORY_ALL = "Alle";
 
 export default function Shop() {
+  const { games, loading, error } = useGames();
   const [searchQuery, setSearchQuery] = useState("");
   const [categoryFilter, setCategoryFilter] = useState(CATEGORY_ALL);
   const [sortBy, setSortBy] = useState<SortOption>("relevanz");
 
   const categories = useMemo(
     () => [CATEGORY_ALL, ...new Set(games.map((game) => game.category))],
-    [],
+    [games],
   );
 
   const visibleGames = useMemo(() => {
@@ -48,7 +50,11 @@ export default function Shop() {
       default:
         return filtered;
     }
-  }, [searchQuery, categoryFilter, sortBy]);
+  }, [games, searchQuery, categoryFilter, sortBy]);
+
+  if (loading || error) {
+    return <AsyncState loading={loading} error={error} />;
+  }
 
   return (
     <Container maxWidth="xl" sx={{ py: 4 }}>

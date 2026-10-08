@@ -15,18 +15,25 @@ async def add_game(game: dict):
 
 
 async def get_game(game_id: str):
-    return await collection.find_one({"id": game_id})
+    return await collection.find_one({"id": game_id}, {"_id": 0})
 
 async def get_all_games():
-    return await collection.find().to_list()
+    return await collection.find({}, {"_id": 0}).to_list()
 
 async def get_games_by_category(category: str):
-    return await collection.find({"category": category}).to_list()
+    return await collection.find({"category": category}, {"_id": 0}).to_list()
 
 async def change_stock(game_id: str, amount: int):
     result = await collection.update_one(
         {"id": game_id},
         {"$inc": {"stock": amount}},
+    )
+    return result.modified_count
+
+async def update_price(game_id: str, price: float):
+    result = await collection.update_one(
+        {"id": game_id},
+        {"$set": {"price": price}},
     )
     return result.modified_count
 
