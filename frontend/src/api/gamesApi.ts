@@ -11,3 +11,17 @@ export async function fetchGames(): Promise<Game[]> {
   }
   return response.json();
 }
+
+export async function createGame(game: Game): Promise<Game> {
+  const response = await fetch(`${API_BASE_URL}/create_games`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(game),
+  });
+  if (!response.ok) {
+    throw new Error(`Spiel konnte nicht erstellt werden (${response.status})`);
+  }
+  return response.json();
+}
