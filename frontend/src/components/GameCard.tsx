@@ -13,14 +13,19 @@ interface GameCardProps {
   game: Game;
   actionLabel?: string;
   showPrice?: boolean;
+  disabled?: boolean;
+  onAction?: () => void;
 }
 
 export default function GameCard({
   game,
   actionLabel = "Ansehen",
   showPrice = true,
+  disabled,
+  onAction,
 }: GameCardProps) {
   const outOfStock = game.stock <= 0;
+  const isDisabled = disabled ?? outOfStock;
 
   return (
     <Card
@@ -83,8 +88,13 @@ export default function GameCard({
             {game.price.toFixed(2)} €
           </Typography>
         )}
-        <Button variant="contained" size="small" disabled={outOfStock}>
-          {outOfStock ? "Ausverkauft" : actionLabel}
+        <Button
+          variant="contained"
+          size="small"
+          disabled={isDisabled}
+          onClick={onAction}
+        >
+          {actionLabel}
         </Button>
       </CardActions>
     </Card>

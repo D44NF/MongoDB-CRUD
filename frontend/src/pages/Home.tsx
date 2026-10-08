@@ -5,13 +5,14 @@ import Chip from "@mui/material/Chip";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import Grid from "@mui/material/Grid";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import GameCard from "../components/GameCard";
 import AsyncState from "../components/AsyncState";
 import { useGames } from "../hooks/useGames";
 
 export default function Home() {
   const { games, loading, error } = useGames();
+  const navigate = useNavigate();
   if (loading || error) {
     return <AsyncState loading={loading} error={error} />;
   }
@@ -98,7 +99,7 @@ export default function Home() {
         <Grid container spacing={3}>
           {games.map((game) => (
             <Grid key={game.id} size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
-              <GameCard game={game} />
+              <GameCard game={game} onAction={() => navigate("/shop")} />
             </Grid>
           ))}
         </Grid>

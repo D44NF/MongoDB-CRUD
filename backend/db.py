@@ -30,6 +30,18 @@ async def change_stock(game_id: str, amount: int):
     )
     return result.modified_count
 
+async def buy_game(game_id: str):
+    game = await collection.find_one({"id": game_id}, {"_id": 0})
+    if game is None:
+        return "not_found"
+    if game.get("stock", 0) <= 0:
+        return "out_of_stock"
+    await collection.update_one(
+        {"id": game_id},
+        {"$set": {"owned": True}, "$inc": {"stock": -1}},
+    )
+    return "ok"
+
 async def update_price(game_id: str, price: float):
     result = await collection.update_one(
         {"id": game_id},

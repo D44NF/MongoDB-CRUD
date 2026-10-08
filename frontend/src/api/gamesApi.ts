@@ -25,3 +25,12 @@ export async function createGame(game: Game): Promise<Game> {
   }
   return response.json();
 }
+
+export async function buyGame(gameId: string): Promise<void> {
+  const response = await fetch(`${API_BASE_URL}/buy_games/${gameId}`, {
+    method: "POST",
+  });
+  if (!response.ok) {
+    throw new Error(`Kauf fehlgeschlagen (${response.status})`);
+  }
+}

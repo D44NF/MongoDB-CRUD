@@ -10,20 +10,37 @@ import InputLabel from "@mui/material/InputLabel";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import Grid from "@mui/material/Grid";
+import Alert from "@mui/material/Alert";
 import SearchIcon from "@mui/icons-material/Search";
 import GameCard from "../components/GameCard";
 import AsyncState from "../components/AsyncState";
 import { useGames } from "../hooks/useGames";
+import { buyGame } from "../api/gamesApi";
 
 type SortOption = "relevanz" | "preis-asc" | "preis-desc" | "lager-desc";
 
 const CATEGORY_ALL = "Alle";
 
 export default function Shop() {
-  const { games, loading, error } = useGames();
+  const { games, loading, error, refetch } = useGames();
   const [searchQuery, setSearchQuery] = useState("");
   const [categoryFilter, setCategoryFilter] = useState(CATEGORY_ALL);
   const [sortBy, setSortBy] = useState<SortOption>("relevanz");
+  const [buyingId, setBuyingId] = useState<string | null>(null);
+  const [buyError, setBuyError] = useState<string | null>(null);
+
+  const handleBuy = async (gameId: string) => {
+    setBuyError(null);
+    setBuyingId(gameId);
+    try {
+      await buyGame(gameId);
+      await refetch();
+    } catch {
+      setBuyError("Kauf fehlgeschlagen.");
+    } finally {
+      setBuyingId(null);
+    }
+  };
 
   const categories = useMemo(
     () => [CATEGORY_ALL, ...new Set(games.map((game) => game.category))],
@@ -119,13 +136,34 @@ export default function Shop() {
         </FormControl>
       </Stack>
 
+      {buyError && (
+        <Alert severity="error" sx={{ mb: 3 }}>
+          {buyError}
+        </Alert>
+      )}
+
       {visibleGames.length === 0 ? (
         <Typography color="text.secondary">Keine Spiele gefunden.</Typography>
       ) : (
         <Grid container spacing={3}>
           {visibleGames.map((game) => (
             <Grid key={game.id} size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
-              <GameCard game={game} />
+              <GameCard
+                game={game}
+                actionLabel={
+                  game.owned
+                    ? "Im Besitz"
+                    : game.stock <= 0
+                      ? "Ausverkauft"
+                      : buyingId === game.id
+                        ? "Wird gekauft..."
+                        : "Kaufen"
+                }
+                disabled={
+                  game.owned || game.stock <= 0 || buyingId === game.id
+                }
+                onAction={() => handleBuy(game.id)}
+              />
             </Grid>
           ))}
         </Grid>

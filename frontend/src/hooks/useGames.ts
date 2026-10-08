@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import type { Game } from "../types/Game";
 import { fetchGames } from "../api/gamesApi";
 
@@ -6,6 +6,7 @@ interface UseGamesResult {
   games: Game[];
   loading: boolean;
   error: string | null;
+  refetch: () => Promise<void>;
 }
 
 export function useGames(): UseGamesResult {
@@ -13,24 +14,22 @@ export function useGames(): UseGamesResult {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    let cancelled = false;
-
-    fetchGames()
-      .then((data) => {
-        if (!cancelled) setGames(data);
-      })
-      .catch(() => {
-        if (!cancelled) setError("Spiele konnten nicht geladen werden.");
-      })
-      .finally(() => {
-        if (!cancelled) setLoading(false);
-      });
-
-    return () => {
-      cancelled = true;
-    };
+  const refetch = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const data = await fetchGames();
+      setGames(data);
+    } catch {
+      setError("Spiele konnten nicht geladen werden.");
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
-  return { games, loading, error };
+  useEffect(() => {
+    refetch();
+  }, [refetch]);
+
+  return { games, loading, error, refetch };
 }
