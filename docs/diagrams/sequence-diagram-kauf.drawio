@@ -1,0 +1,106 @@
+<mxfile host="Electron">
+  <diagram name="Sequenzdiagramm - Spiel kaufen" id="sequence1">
+    <mxGraphModel dx="780" dy="674" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="900" pageHeight="620" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="p1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Nutzer" vertex="1">
+          <mxGeometry height="40" width="140" x="40" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="p2" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Shop (React)" vertex="1">
+          <mxGeometry height="40" width="140" x="240" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="p3" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="FastAPI Backend" vertex="1">
+          <mxGeometry height="40" width="140" x="440" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="p4" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="MongoDB" vertex="1">
+          <mxGeometry height="40" width="140" x="640" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="l1" edge="1" parent="1" style="html=1;dashed=1;endArrow=none;startArrow=none;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="110" y="80" as="sourcePoint" />
+            <mxPoint x="110" y="560" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="l2" edge="1" parent="1" style="html=1;dashed=1;endArrow=none;startArrow=none;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="310" y="80" as="sourcePoint" />
+            <mxPoint x="310" y="560" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="l3" edge="1" parent="1" style="html=1;dashed=1;endArrow=none;startArrow=none;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="510" y="80" as="sourcePoint" />
+            <mxPoint x="510" y="560" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="l4" edge="1" parent="1" style="html=1;dashed=1;endArrow=none;startArrow=none;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="710" y="80" as="sourcePoint" />
+            <mxPoint x="710" y="560" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m1" edge="1" parent="1" style="html=1;endArrow=block;fontSize=11;verticalAlign=bottom;" value="1: Klick &quot;Kaufen&quot;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="110" y="120" as="sourcePoint" />
+            <mxPoint x="310" y="120" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m2" edge="1" parent="1" style="html=1;endArrow=block;fontSize=11;verticalAlign=bottom;" value="2: POST /buy_games/{id}">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="310" y="160" as="sourcePoint" />
+            <mxPoint x="510" y="160" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m3" edge="1" parent="1" style="html=1;endArrow=block;fontSize=11;verticalAlign=bottom;" value="3: find_one({id})">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="510" y="200" as="sourcePoint" />
+            <mxPoint x="710" y="200" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m4" edge="1" parent="1" style="html=1;dashed=1;endArrow=open;fontSize=11;verticalAlign=bottom;" value="4: Dokument (stock, owned)">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="710" y="240" as="sourcePoint" />
+            <mxPoint x="510" y="240" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m5" edge="1" parent="1" style="html=1;endArrow=block;fontSize=11;verticalAlign=bottom;" value="5: update_one($set owned, $inc stock)">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="510" y="280" as="sourcePoint" />
+            <mxPoint x="710" y="280" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m6" edge="1" parent="1" style="html=1;dashed=1;endArrow=open;fontSize=11;verticalAlign=bottom;" value="6: Bestätigung">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="710" y="320" as="sourcePoint" />
+            <mxPoint x="510" y="320" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m7" edge="1" parent="1" style="html=1;dashed=1;endArrow=open;fontSize=11;verticalAlign=bottom;" value="7: 200 OK {ok: true}">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="510" y="360" as="sourcePoint" />
+            <mxPoint x="310" y="360" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m8" edge="1" parent="1" style="html=1;endArrow=block;fontSize=11;verticalAlign=bottom;" value="8: GET /get_all_games (refetch)">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="310" y="400" as="sourcePoint" />
+            <mxPoint x="510" y="400" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m9" edge="1" parent="1" style="html=1;dashed=1;endArrow=open;fontSize=11;verticalAlign=bottom;" value="9: Spiele-Liste (owned: true)">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="510" y="440" as="sourcePoint" />
+            <mxPoint x="310" y="440" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m10" edge="1" parent="1" style="html=1;endArrow=block;fontSize=11;verticalAlign=bottom;" value="10: Bibliothek zeigt Spiel an">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="310" y="480" as="sourcePoint" />
+            <mxPoint x="110" y="480" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
