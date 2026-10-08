@@ -7,9 +7,15 @@ import Stack from "@mui/material/Stack";
 import Grid from "@mui/material/Grid";
 import { Link } from "react-router-dom";
 import GameCard from "../components/GameCard";
-import { games } from "../data/games";
+import AsyncState from "../components/AsyncState";
+import { useGames } from "../hooks/useGames";
 
 export default function Home() {
+  const { games, loading, error } = useGames();
+  if (loading || error) {
+    return <AsyncState loading={loading} error={error} />;
+  }
+
   const featuredGame = games.length > 0 ? games[0] : null;
 
   return (
