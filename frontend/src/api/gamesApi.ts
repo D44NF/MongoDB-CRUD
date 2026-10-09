@@ -34,3 +34,30 @@ export async function buyGame(gameId: string): Promise<void> {
     throw new Error(`Kauf fehlgeschlagen (${response.status})`);
   }
 }
+
+export type GameUpdateInput = Omit<Game, "id" | "owned">;
+
+export async function updateGame(
+  gameId: string,
+  game: GameUpdateInput,
+): Promise<void> {
+  const response = await fetch(`${API_BASE_URL}/update_games/${gameId}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(game),
+  });
+  if (!response.ok) {
+    throw new Error(`Spiel konnte nicht aktualisiert werden (${response.status})`);
+  }
+}
+
+export async function deleteGame(gameId: string): Promise<void> {
+  const response = await fetch(`${API_BASE_URL}/delete_games/${gameId}`, {
+    method: "DELETE",
+  });
+  if (!response.ok) {
+    throw new Error(`Spiel konnte nicht gelöscht werden (${response.status})`);
+  }
+}

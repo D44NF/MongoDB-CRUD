@@ -5,4 +5,5 @@ export interface Game {
   price: number;
   stock: number;
   owned: boolean;
+  imageUrl?: string | null;
 }

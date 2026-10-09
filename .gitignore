@@ -219,3 +219,9 @@ __marimo__/
 # Streamlit
 .streamlit/secrets.toml
 node_modules
+
+# macOS
+.DS_Store
+
+# draw.io backup files
+*.bkp
